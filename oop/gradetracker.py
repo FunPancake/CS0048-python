@@ -10,48 +10,49 @@ class Student:
         self.name = name
         self.studentnumber = studentnumber
         self.grade = {}
-        
+
     def addgrade(self, subject, grade):
         self.grade[subject] = grade
-        print("Grade added: {subject} = {grade}")
-    
+        print(f"Grade added: {subject} = {grade}")  # Fixed string formatting
+
     def calcgrade(self):
         if not self.grade:
             return 0
         return sum(self.grade.values()) / len(self.grade)
-    
+
     def __str__(self):
-        grades_str = ", " . join(f"{subj}: {grade}" for subj, grade in self.grade.items())
+        grades_str = ", ".join(f"{subj}: {grade}" for subj, grade in self.grade.items())
         avg = self.calcgrade()
-        return f"{self.name} {self.studentnumber} - {grades_str or "no Grades"} | Average: {avg:.2f}" 
-    
+        return f"{self.name} {self.studentnumber} - {grades_str or 'no Grades'} | Average: {avg:.2f}"
+
+
 class GradeTracker:
     def __init__(self):
         self.students = {}
-        
-    def addstudent(self, studentnumber, name):
+
+    def addstudent(self, name, studentnumber):  # Changed param order
         if studentnumber in self.students:
             print("Student number already exists.")
         else:
             student = Student(name, studentnumber)
             self.students[studentnumber] = student
             print("Student added successfully!")
-        
-    def addgrade(self, subject, grade, studentnumber):
+
+    def addgrade(self, studentnumber, subject, grade):
         student = self.students.get(studentnumber)
         if student:
             student.addgrade(subject, grade)
         else:
-            print("Student not Found")
-    
+            print("Student not found.")
+
     def viewgrades(self):
         if not self.students:
-            print("Student not Found")
+            print("No students found.")
         else:
-            print("\nStudent Grades: ")
+            print("\nStudent Grades:")
             for student in self.students.values():
                 print(student)
-        
+
     def calcgrade(self, studentnumber):
         student = self.students.get(studentnumber)
         if student:
@@ -59,7 +60,8 @@ class GradeTracker:
             print(f"{student.name}'s average grade is: {avg:.2f}")
         else:
             print("Student not found.")
-            
+
+
 def main():
     tracker = GradeTracker()
 
@@ -103,6 +105,7 @@ def main():
 
         else:
             print("Invalid choice. Please try again.")
+
 
 if __name__ == "__main__":
     main()
