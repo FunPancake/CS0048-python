@@ -7,8 +7,6 @@
 
 class Student:
     def __init__(self, name, student_number):
-        if not (student_number.isdigit() and len(student_number) == 9):
-            raise ValueError("Student number must be exactly 9 digits.")
         self.name = name
         self.student_number = student_number
         self.grades = {}  # subject -> grade
@@ -36,12 +34,9 @@ class GradeTracker:
         if student_number in self.students:
             print("Student number already exists.")
         else:
-            try:
-                student = Student(name, student_number)
-                self.students[student_number] = student
-                print("Student added successfully!")
-            except ValueError as e:
-                print(e)
+            student = Student(name, student_number)
+            self.students[student_number] = student
+            print("Student added successfully!")
 
     def add_grade(self, student_number, subject, grade):
         student = self.students.get(student_number)
@@ -82,11 +77,11 @@ def main():
 
         if choice == '1':
             name = input("Enter student name: ")
-            student_number = input("Enter 9-digit student number: ")
+            student_number = input("Enter student number (any format): ")
             tracker.add_student(name, student_number)
 
         elif choice == '2':
-            student_number = input("Enter 9-digit student number: ")
+            student_number = input("Enter student number: ")
             subject = input("Enter subject: ")
             try:
                 grade = float(input("Enter grade (0-100): "))
@@ -101,7 +96,7 @@ def main():
             tracker.view_grades()
 
         elif choice == '4':
-            student_number = input("Enter 9-digit student number: ")
+            student_number = input("Enter student number: ")
             tracker.calculate_average(student_number)
 
         elif choice == '5':
