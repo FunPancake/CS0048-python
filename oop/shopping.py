@@ -23,6 +23,7 @@ class ShoppingCart:
         self.cart = {}
 
     def add_product(self, name, price, quantity):
+        key = name.lower()
         if name in self.cart:
             self.cart[name].quantity += quantity
             print(f"Added {quantity} more of {name} to the cart.")
