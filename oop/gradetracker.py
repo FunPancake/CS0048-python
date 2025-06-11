@@ -6,8 +6,11 @@
 # - Use classes for Student and GradeTracker.
 
 class Student:
-    def __init__(self, name):
+    def __init__(self, name, student_number):
+        if not (student_number.isdigit() and len(student_number) == 9):
+            raise ValueError("Student number must be exactly 9 digits.")
         self.name = name
+        self.student_number = student_number
         self.grades = {}  # subject -> grade
 
     def add_grade(self, subject, grade):
@@ -20,29 +23,32 @@ class Student:
         return sum(self.grades.values()) / len(self.grades)
 
     def __str__(self):
-        if not self.grades:
-            return f"{self.name} - No grades available"
         grades_str = ', '.join(f"{subj}: {grade}" for subj, grade in self.grades.items())
         avg = self.calculate_average()
-        return f"{self.name} - {grades_str} | Average: {avg:.2f}"
+        return f"{self.name} ({self.student_number}) - {grades_str or 'No grades'} | Average: {avg:.2f}"
 
 
 class GradeTracker:
     def __init__(self):
-        self.students = {}
+        self.students = {}  # student_number -> Student
 
-    def add_student(self, name):
-        if name in self.students:
-            print("Student already exists.")
+    def add_student(self, name, student_number):
+        if student_number in self.students:
+            print("Student number already exists.")
         else:
-            self.students[name] = Student(name)
-            print("Student added successfully!")
+            try:
+                student = Student(name, student_number)
+                self.students[student_number] = student
+                print("Student added successfully!")
+            except ValueError as e:
+                print(e)
 
-    def add_grade(self, name, subject, grade):
-        if name not in self.students:
+    def add_grade(self, student_number, subject, grade):
+        student = self.students.get(student_number)
+        if student:
+            student.add_grade(subject, grade)
+        else:
             print("Student not found.")
-        else:
-            self.students[name].add_grade(subject, grade)
 
     def view_grades(self):
         if not self.students:
@@ -52,16 +58,18 @@ class GradeTracker:
             for student in self.students.values():
                 print(student)
 
-    def calculate_average(self, name):
-        if name not in self.students:
-            print("Student not found.")
+    def calculate_average(self, student_number):
+        student = self.students.get(student_number)
+        if student:
+            avg = student.calculate_average()
+            print(f"{student.name}'s average grade is: {avg:.2f}")
         else:
-            avg = self.students[name].calculate_average()
-            print(f"{name}'s average grade is: {avg:.2f}")
+            print("Student not found.")
 
 
 def main():
     tracker = GradeTracker()
+
     while True:
         print("\nGrade Tracker Menu:")
         print("1. Add Student")
@@ -74,26 +82,32 @@ def main():
 
         if choice == '1':
             name = input("Enter student name: ")
-            tracker.add_student(name)
+            student_number = input("Enter 9-digit student number: ")
+            tracker.add_student(name, student_number)
+
         elif choice == '2':
-            name = input("Enter student name: ")
+            student_number = input("Enter 9-digit student number: ")
             subject = input("Enter subject: ")
             try:
                 grade = float(input("Enter grade (0-100): "))
                 if 0 <= grade <= 100:
-                    tracker.add_grade(name, subject, grade)
+                    tracker.add_grade(student_number, subject, grade)
                 else:
                     print("Grade must be between 0 and 100.")
             except ValueError:
-                print("Invalid input. Please enter a number.")
+                print("Invalid grade input. Must be a number.")
+
         elif choice == '3':
             tracker.view_grades()
+
         elif choice == '4':
-            name = input("Enter student name: ")
-            tracker.calculate_average(name)
+            student_number = input("Enter 9-digit student number: ")
+            tracker.calculate_average(student_number)
+
         elif choice == '5':
             print("Exiting Grade Tracker. Goodbye!")
             break
+
         else:
             print("Invalid choice. Please try again.")
 
