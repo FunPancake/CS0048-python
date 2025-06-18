@@ -23,6 +23,7 @@ for sublist in mult_list:
 print('\n\n', '#-----------------------------------------------------------------') 
 
 num_list = [1,3,5,7,9]
+print(num_list)
 num_list.insert(1,2)
 num_list.remove(3)
 print(num_list.pop())
