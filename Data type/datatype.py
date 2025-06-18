@@ -14,8 +14,8 @@ x = sum(sublist.count('A') for sublist in mult_list)
 print(x)
 print(mult_list)
 
-for mult_list in i:
-    print(i, mult_list)
+for sublist in mult_list:
+    print(sublist)
 
 num_list = [1,3,5,7,9]
 num_list.insert(1,2)
