@@ -24,3 +24,5 @@ print(num_list.pop())
 print(num_list)
 
 # del num_list
+
+print ("I asked, \"What's my name\"") # \"(string)\"
