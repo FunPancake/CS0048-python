@@ -7,3 +7,16 @@ https://manus.im/
 https://bolt.new/
 
 https://lovable.dev/
+
+
+webpage framework
+  python
+   - flask (CRUD) + bootstrap + ML + AI
+   - django
+
+ - laravel
+ - codeIgniter
+
+  Java
+   - java sprint
+   - react
