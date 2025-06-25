@@ -20,3 +20,10 @@ webpage framework
   Java
    - java sprint
    - react
+
+
+Module 6
+https://colab.research.google.com/drive/1bRUcgWVAMhLFbuBo9Dafz_afsqfPL0fE#scrollTo=vEND3cm5dgGn
+
+module 6a
+https://colab.research.google.com/drive/1usPEmTn7Bn0BE-Zd3TQzDPh94lcC7YPo#scrollTo=yHvGy9xLonS0
